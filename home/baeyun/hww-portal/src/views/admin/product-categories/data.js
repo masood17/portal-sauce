@@ -1,0 +1,16 @@
+export default [
+  { id: 1, title: "Raw Meat", code: "RM" },
+  { id: 3, title: "Cosmetics", code: "CS" },
+  { id: 4, title: "Nutraceuticals", code: "NU" },
+  { id: 6, title: "Flavors", code: "FL" },
+  { id: 7, title: "Chemicals", code: "CH" },
+  { id: 8, title: "Oils", code: "OL" },
+  { id: 12, title: "Dairy", code: "DY" },
+  { id: 13, title: "Livestock", code: "LS" },
+  { id: 14, title: "Packaging Material", code: "PM" },
+  { id: 15, title: "Pharmaceuticals", code: "PH" },
+  { id: 16, title: "Non-Specific", code: "NS" },
+  { id: 17, title: "Poultry", code: "PY" },
+  { id: 18, title: "Produce", code: "PR" },
+  { id: 19, title: "Refined", code: "RF" },
+];

@@ -1,0 +1,221 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  Box,
+  Typography,
+  makeStyles,
+  LinearProgress,
+  CircularProgress,
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { useSnackbar } from "notistack";
+
+import { insert } from "../../common/utils";
+import { Ingredient } from "../../common/types";
+import IngredientDialog, { IngredientDialogMode } from "./IngredientDialog";
+
+export interface IngredientsViewProps {
+  productId: number;
+  breadcrumbsList?: string[];
+}
+
+export default function IngredientsView({
+  productId,
+  breadcrumbsList,
+}: IngredientsViewProps) {
+  const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+  const load = () =>
+    axios
+      .post(`/api/client/product/${productId}/ingredients`)
+      .then(async (response) => {
+        setLoading(false);
+        if (response.status == 200 || response.status == 201) {
+          setIngredients(response.data.reverse());
+        } else {
+          console.log(response);
+          enqueueSnackbar("Failed to retrieve product ingredients.", {
+            variant: "error",
+          });
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+        setLoading(false);
+        enqueueSnackbar("Failed to retrieve product ingredients.", {
+          variant: "error",
+        });
+      });
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const handleIngredientAdd = (product: Ingredient) => {
+    // setIngredients([product, ...ingredients]);
+    load();
+  };
+
+  const handleIngredientUpdate = (product: Ingredient, i: number) => {
+    // const newIngredients = insert<Ingredient>(ingredients, i, product);
+    // setIngredients(newIngredients);
+    load();
+  };
+
+  const handleIngredientDelete = (productId: number) => {
+    setIngredients(ingredients.filter((p) => p.id != productId));
+  };
+
+  return (
+    <Box>
+      <Box className={classes.header}>
+        <Typography variant="h4">Product Ingredients</Typography>
+        <IngredientDialog
+          productId={productId}
+          onIngredientUpdate={handleIngredientAdd}
+          mode={IngredientDialogMode.ADD}
+        />
+      </Box>
+      {(loading && <CircularProgress />) || (
+        <List className={classes.ingredientList}>
+          {(ingredients.length &&
+            ingredients.map((ingredient: Ingredient, i: number) => (
+              <IngredientItem
+                key={ingredient.id}
+                divider={i != ingredients.length - 1}
+                ingredient={ingredient}
+                onIngredientUpdate={(ingredient: Ingredient) =>
+                  handleIngredientUpdate(ingredient, i)
+                }
+                onIngredientDelete={handleIngredientDelete}
+                breadcrumbsList={breadcrumbsList}
+              />
+            ))) || (
+            <Alert severity="info">This product has no ingredients.</Alert>
+          )}
+        </List>
+      )}
+    </Box>
+  );
+}
+
+export interface IngredientItemProps {
+  divider?: boolean;
+  ingredient: Ingredient;
+  onIngredientUpdate: (ingredient: Ingredient) => void;
+  onIngredientDelete: (ingredientId: number) => void;
+  breadcrumbsList?: string[];
+}
+
+export function IngredientItem({
+  divider = false,
+  ingredient,
+  onIngredientUpdate,
+  onIngredientDelete,
+  breadcrumbsList,
+}: IngredientItemProps) {
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleIngredientItemClick = () => setOpen(true);
+
+  const handleIngredientDialogClose = () => setOpen(false);
+
+  const _onIngredientUpdate = (ingredient: Ingredient) => {
+    setOpen(false);
+    onIngredientUpdate(ingredient);
+  };
+
+  const handleIngredientDelete = () => {
+    const answer = window.confirm(
+      "Are you sure you would like to trash this ingredient?"
+    );
+
+    if (!answer) return;
+
+    setLoading(true);
+
+    axios
+      .delete("/api/client/ingredient/" + ingredient.id)
+      .then(async (response: any) => {
+        setLoading(false);
+        if (response.status == 200 || response.status == 201) {
+          onIngredientDelete(ingredient.id as number);
+          enqueueSnackbar("Ingredient trashed successfully.", {
+            variant: "success",
+          });
+        } else
+          enqueueSnackbar(
+            "Failed to trash ingredient. Contact the developer.",
+            {
+              variant: "error",
+            }
+          );
+      })
+      .catch((e: any) => {
+        console.error(e);
+        setLoading(false);
+        enqueueSnackbar(
+          "Failed to trash ingredient. Check your network connection and try again.",
+          {
+            variant: "error",
+          }
+        );
+      });
+  };
+
+  return (
+    <>
+      <ListItem
+        key={ingredient.id}
+        divider={divider}
+        button
+        onClick={handleIngredientItemClick}
+      >
+        {loading && <LinearProgress />}
+        <ListItemText
+          primary={ingredient.name}
+          secondary={ingredient.manufacturer?.name}
+          // secondary={moment(ingredient.date).format("DD/MM/YY")}
+        />
+        <ListItemSecondaryAction>
+          <IconButton edge="end" onClick={handleIngredientDelete}>
+            <DeleteForeverIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+      <IngredientDialog
+        mode={IngredientDialogMode.EDIT}
+        open={open}
+        edit={ingredient}
+        onClose={handleIngredientDialogClose}
+        onIngredientUpdate={_onIngredientUpdate}
+        breadcrumbsList={breadcrumbsList}
+      />
+    </>
+  );
+}
+
+const useStyles = makeStyles(() => ({
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  ingredientList: {
+    overflowY: "auto",
+    maxHeight: "calc(100vh - 239px)",
+    marginTop: 15,
+  },
+}));

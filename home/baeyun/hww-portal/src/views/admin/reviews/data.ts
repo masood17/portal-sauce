@@ -1,0 +1,86 @@
+import { Review, ReviewStatus } from "./Review";
+
+const data: Review[] = [
+  {
+    id: 15,
+    businessName: "Fancy Food",
+    ownerName: "Fancy Pants",
+    date: 1555016400000,
+    reviewerName: "ali fazal",
+    status: ReviewStatus.PENDING,
+  },
+  {
+    id: 14,
+    businessName: "One Drug Store",
+    ownerName: "John Doe",
+    date: 1565026500000,
+    reviewerName: "Darweesh",
+    status: ReviewStatus.PENDING,
+  },
+  {
+    id: 13,
+    businessName: "Freshy Meats",
+    ownerName: "Henry Robinson",
+    date: 1555016400000,
+    reviewerName: "Mo",
+    status: ReviewStatus.REJECTED,
+  },
+  {
+    id: 12,
+    businessName: "Foultry",
+    ownerName: "Patrick Weizer",
+    date: 1555016400000,
+    reviewerName: "ali fazal",
+    status: ReviewStatus.APPROVED,
+  },
+  {
+    id: 11,
+    businessName: "Candy Land",
+    ownerName: "Jane Doe",
+    date: 1555016400000,
+    reviewerName: "Darweesh",
+    status: ReviewStatus.APPROVED,
+  },
+  {
+    id: 10,
+    businessName: "Bazaar Foods",
+    ownerName: "Fancy Pants",
+    date: 1555016400000,
+    reviewerName: "ali fazal",
+    status: ReviewStatus.PENDING,
+  },
+  {
+    id: 9,
+    businessName: "Faster Foods",
+    ownerName: "John Doe",
+    date: 1565026500000,
+    reviewerName: "Darweesh",
+    status: ReviewStatus.APPROVED,
+  },
+  {
+    id: 8,
+    businessName: "Medi Mart",
+    ownerName: "Henry Robinson",
+    date: 1555016400000,
+    reviewerName: "Mo",
+    status: ReviewStatus.REJECTED,
+  },
+  {
+    id: 7,
+    businessName: "Foo",
+    ownerName: "Patrick Weizer",
+    date: 1555016400000,
+    reviewerName: "ali fazal",
+    status: ReviewStatus.PENDING,
+  },
+  {
+    id: 6,
+    businessName: "Bar",
+    ownerName: "Jane Doe",
+    date: 1555016400000,
+    reviewerName: "Darweesh",
+    status: ReviewStatus.APPROVED,
+  },
+];
+
+export default data;

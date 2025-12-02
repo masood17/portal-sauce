@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.MuiTab-wrapper {
+  flex-direction: row !important;
+}
+
+/* reviewer styles */
+.tabPanel > div {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* profile read-only view */
+.profile-view-field .MuiInputBase-root,
+.profile-view-field .MuiSelect-select.MuiSelect-select {
+  color: #263238 !important;
+}
+
+/* Dashboard Stat Cards */
+.dashboard-stat-card:hover {
+  box-shadow: 0 0 7px 5px rgb(63 63 68 / 10%), 0 1px 2px 0 rgb(63 63 68 / 15%);
+}
+
+.dashboard-stat-card .MuiStepConnector-alternativeLabel {
+    top: 23px;
+    left: calc(-50% + 25px);
+    right: calc(50% + 25px);
+}

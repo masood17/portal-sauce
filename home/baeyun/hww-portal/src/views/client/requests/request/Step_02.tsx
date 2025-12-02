@@ -1,0 +1,102 @@
+import React, { useState, useEffect } from "react";
+import { Box, makeStyles, Typography } from "@material-ui/core";
+
+import PromptDialog from "../../../reviewer/common/PromptDialog";
+import { FacilityDocumentType } from "../../../reviewer/common/types";
+import FacilityDocsView from "./FacilityDocsView";
+
+interface StepProps {
+  facilityId: number;
+  setGreenLight: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// @TODO handle avatar
+const StepThree = ({ facilityId, setGreenLight }: StepProps) => {
+  const classes = useStyles();
+  const [promptOpen, setPromptOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setGreenLight(true);
+  });
+
+  return (
+    <Box className={classes.stepBox}>
+      <PromptDialog
+        open={promptOpen}
+        onOk={() => setPromptOpen(false)}
+        title="Video Tutorial"
+        maxWidth="lg"
+        message={
+          <iframe
+            width="720"
+            height="450"
+            src="https://www.youtube.com/embed/QXOG7UasZtw"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        }
+      />
+      <Typography
+        variant="h3"
+        style={{
+          marginBottom: 10,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Legal Business Documents{" "}
+        {/* <Button
+          onClick={() => setPromptOpen(true)}
+          startIcon={<HelpIcon />}
+          size="small"
+        >
+          Video Tutorial
+        </Button> */}
+      </Typography>
+      <FacilityDocsView
+        facilityId={facilityId}
+        type={FacilityDocumentType.LEGAL_BUSINESS_DOCUMENTS}
+      />
+      <iframe
+        width="320"
+        height="180"
+        src="https://www.youtube.com/embed/QXOG7UasZtw"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        style={{ display: "flex", alignSelf: "center" }}
+      ></iframe>
+      <Typography style={{ marginBottom: 30, marginTop: 30 }}>
+        Upload documentation verifying that your company is legally permitted to
+        do business in your locale.
+      </Typography>
+    </Box>
+  );
+};
+
+export default StepThree;
+
+const useStyles = makeStyles((theme) => ({
+  stepBox: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    // alignItems: "center",
+  },
+  stepBtn: {
+    width: 500,
+  },
+
+  root: {},
+  demo: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  title: {
+    margin: theme.spacing(4, 0, 2),
+  },
+}));

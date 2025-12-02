@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "es2020",                 /* Specify ECMAScript target version */
+    "module": "esnext",                  /* Specify module code generation */
+    "lib": ["dom", "dom.iterable", "esnext"], /* Specify library files to be included in the compilation */
+    "allowJs": true,                     /* Allow JavaScript files to be compiled */
+    "jsx": "react-jsx",                  /* Specify JSX code generation: 'react-jsx' */
+    "outDir": "./dist",                  /* Redirect output structure to the directory */
+
+    /* Strict Type-Checking Options */
+    "strict": true,                      /* Enable all strict type-checking options */
+    "noImplicitAny": true,               /* Ensure all variables are typed (will fix "implicitly has any type") */
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",          /* Resolve modules using Node.js style */
+    "esModuleInterop": true,             /* Allows default imports from modules with no default export */
+    "resolveJsonModule": true,           /* Include modules imported via .json files */
+    "isolatedModules": true,             /* Ensure modules can be compiled separately (good for Webpack) */
+    "baseUrl": "./",                     /* Base directory to resolve non-relative module names */
+
+    /* Paths (Optional but good if you used custom aliases) */
+    // "paths": {
+    //   "@common/*": ["./src/common/*"]
+    // }
+  },
+  "include": [
+    "src/**/*",
+    "lib/**/*",
+    "client/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
