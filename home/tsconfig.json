@@ -17,7 +17,7 @@
     "esModuleInterop": true,             /* Allows default imports from modules with no default export */
     "resolveJsonModule": true,           /* Include modules imported via .json files */
     "isolatedModules": true,             /* Ensure modules can be compiled separately (good for Webpack) */
-    "baseUrl": "./",                     /* Base directory to resolve non-relative module names */
+    "baseUrl": "./home/src",                     /* Base directory to resolve non-relative module names */
 
     /* Paths (Optional but good if you used custom aliases) */
     // "paths": {
